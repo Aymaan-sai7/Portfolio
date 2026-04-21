@@ -3,39 +3,43 @@ const projects = [
     id: "1",
     title: "Angora Website",
     image: "img/projects-img/angora_1.jpeg",
-    description: ""
+    description: "",
+    tech: ["HTML", "CSS",]
   },
   {
     id: "2",
     title: "E-coo__ ",
     image: "img/projects-img/eco_0.jpeg",
-    description: ""
+    description: "",
+    tech: ["HTML", "CSS", "JS", "Bootstrap"]
   },
   {
     id: "3",
     title: "Note app mean-stack",
     image: "img/projects-img/mean-stack_3.jpeg",
-    description: ""
+    description: "",
+    tech: ["HTML", "CSS", "JS","Type Script","Angular", "Mongo DB" , "Node.js" , "Express.js"]
   },
   {
     id: "4",
     title: "Globaly",
     image: "img/projects-img/globaly_1.jpeg",
-    description: ""
+    description: "",
+    tech: ["HTML", "CSS",]
   },
   {
-    id: "4",
+    id: "5",
     title: "Frontend-api Website",
     image: "img/projects-img/frontend-api_1.jpeg",
-    description: ""
+    description: "",
+    tech: ["HTML", "CSS", "JS","Angular.js"]
   }
 ];
-
-
+const projectsCards = document.getElementById("projects-cards");
 const params = new URLSearchParams(window.location.search);
 const projectId = params.get("id");
-
 const project = projects.find(p => p.id === projectId);
+
 
 if (project) {
   document.getElementById("project-title").textContent = project.title;
@@ -44,27 +48,13 @@ if (project) {
 }
 
 
-
-// if (document.getElementById("project-title")) {
-
-//   const params = new URLSearchParams(window.location.search);
-//   const projectId = params.get("id");
-
-//   const project = projects.find(p => p.id === projectId);
-
-//   if (project) {
-//     document.getElementById("project-title").textContent = project.title;
-//     document.getElementById("project-image").src = project.image;
-//     document.getElementById("project-description").textContent = project.description;
-//   }
-
-// }
-
-
-const projectsCards = document.getElementById("projects-cards");
-
 if (projectsCards) {
   projects.forEach(project => {
+    let techLinks = "";
+
+  project.tech.forEach(tech => {
+    techLinks += `<a href="#">${tech}</a>`;
+  });
     projectsCards.innerHTML += `
       <div class="card">
         <div class="card-img">
@@ -82,15 +72,10 @@ if (projectsCards) {
           <h2>${project.title}</h2>
           <p>${project.description}</p>
         </div>
-
+        <div class="card-btn">
+        ${techLinks}
+      </div>
       </div>
     `;
   });
 }
-
-
-        // <div class="card-btn">
-        //   <a href="#">Html</a>
-        //   <a href="#">CSS</a>
-        //   <a href="#">JS</a>
-        // </div>

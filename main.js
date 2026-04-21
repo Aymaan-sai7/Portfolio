@@ -4,7 +4,6 @@ const certificates = [
     title: "Web Design",
     issuer: "NTI",
     image: "img/NTI.jpeg",
-    link: "#",
     date: "June 2025 - July 2025",
   },
   {
@@ -12,7 +11,6 @@ const certificates = [
     title: "Mean-stack",
     issuer: "NTI",
     image: "img/NTI_summer.jpeg",
-    link: "#",
     date: "June 2025 - July 2025",
   },
   {
@@ -20,7 +18,6 @@ const certificates = [
     title: "UI/UX",
     issuer: "NTI",
     image: "img/UI.jpeg",
-    link: "#",
     date: "June 2025 - July 2025",
   },
   {
@@ -28,10 +25,52 @@ const certificates = [
     title: "Innovegypt",
     issuer: "Innovegypt",
     image: "img/Innovegypt.jpeg",
-    link: "#",
     date: "June 2025 - July 2025",
   },
 ];
+
+const skills = [
+  {
+    category: "Frontend",
+    technologies: [
+      { name: "Angular.js", icon: "devicon-angularjs-plain colored", },
+      { name: "JavaScript", icon: "devicon-javascript-plain colored", },
+      { name: "TypeScript", icon: "devicon-typescript-plain colored", },
+      { name: "Bootstrap", icon: "devicon-bootstrap-plain colored", },
+      { name: "Tailwind", icon: "devicon-tailwindcss-plain colored", },
+      { name: "MUI", icon: "devicon-materialui-plain colored", },
+      { name: "React.js", icon: "devicon-react-original colored", }
+    ]
+  },
+  {
+    category: "Backend",
+    technologies: [
+      { name: "Node.js", icon: "devicon-nodejs-plain colored",  },
+      { name: "Mongo DB", icon: "devicon-mongodb-plain colored",  },
+      { name: "Express.js", icon: "devicon-express-original colored",  }
+    ]
+  },
+  {
+    category: "Tools",
+    technologies: [
+      { name: "Github", icon: "devicon-github-original colored" },
+      { name: "VS Code", icon: "devicon-vscode-plain colored" },
+      { name: "Figma", icon: "devicon-figma-plain colored" }
+    ]
+  },
+  {
+    category: "Soft Skills",
+    technologies: [
+      { name: "Github", },
+      { name: "VS Code", },
+      { name: "Figma", }
+    ]
+  }
+];
+
+
+
+// JS-certificates
 
 const certificatesCards = document.getElementById("certificates-cards");
 
@@ -46,7 +85,7 @@ if (certificatesCards) {
                     <h3>${cert.title}</h3>
           <p>${cert.issuer}</p>
                                         <span>${cert.date}</span>
-                                                  <a href="${cert.link}" target="_blank">View Certificate</a>
+                
 
 
                   </div>
@@ -64,91 +103,45 @@ images.forEach((img) => {
   img.addEventListener("click", () => {
     modal.classList.add("active");
     modalImg.src = img.src;
+    document.body.classList.add("no-scroll");
   });
-});
-
-closeBtn.addEventListener("click", () => {
-  modal.classList.remove("active");
 });
 
 modal.addEventListener("click", (e) => {
   if (e.target === modal) {
     modal.classList.remove("active");
+    document.body.classList.remove("no-scroll");
   }
 });
 
 
 
+// JS-Skills
 
+const skillsSection = document.getElementById("skills-section");
 
+skills.forEach(skillCategory => {
 
+  let techCards = "";
 
+  skillCategory.technologies.forEach(tech => {
 
-const navLinks = document.querySelectorAll(".nav-links a");
+    const hasIcon = tech.icon && tech.icon.trim() !== "";
 
-navLinks.forEach(link => {
-  link.addEventListener("click", function() {
-
-    navLinks.forEach(l => l.classList.remove("nav-active"));
-
-    this.classList.add("nav-active");
+    techCards += `
+      <div class="tech-card">
+        ${hasIcon ? `<i class="${tech.icon}"></i>` : ""}
+        <h3>${tech.name}</h3>
+      </div>
+    `;
   });
+
+  skillsSection.innerHTML += `
+    <div class="skill-cate">
+      <h2 class="category-major">${skillCategory.category}</h2>
+      <div class="technologies">
+        ${techCards}
+      </div>
+    </div>
+  `;
 });
-
-
-
-
-
-
-
-const nav = document.querySelector("nav");
-
-window.addEventListener("scroll", function () {
-
-  if (window.scrollY > 50) {
-    nav.classList.add("scrolled");
-  } else {
-    nav.classList.remove("scrolled");
-  }
-
-});
-
-
-
-
-
-
-
-
-
-const counters = document.querySelectorAll(".percent");
-
-const options = {
-  root: null, // الفيوبورت
-  threshold: 0.3 // لما 30% من السكشن يظهر
-};
-
-const animateCounters = (entries, observer) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) {
-      counters.forEach(counter => {
-        const target = +counter.getAttribute("data-target");
-        let count = 0;
-
-        const updateCount = () => {
-          if(count < target) {
-            count++;
-            counter.innerText = "+" + count + "%";
-            setTimeout(updateCount, 50); // السرعة
-          }
-        };
-
-        updateCount();
-      });
-      observer.unobserve(entry.target); // بعد ما يشتغل مرة واحدة
-    }
-  });
-};
-
-const observer = new IntersectionObserver(animateCounters, options);
-observer.observe(document.querySelector("#skills"));
